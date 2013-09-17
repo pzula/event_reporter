@@ -1,4 +1,4 @@
-class Controls
+class CommandCenter
 
   def command
     keystroke = ""
@@ -52,6 +52,3 @@ class Controls
   end
 
 end
-
-robot = Controls.new
-robot.command
