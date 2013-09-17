@@ -3,16 +3,17 @@ require 'csv'
 class EventReporter
 
   def initialize
-    puts "EventManager initialized."
+    puts "Event Reporter initialized."
   end
 
   def load_csv(filename)
     if filename == nil
-      default = './event_attendees.csv'
+      default = 'event_attendees.csv'
       contents = CSV.open default, headers: true, header_converters: :symbol
       return default
     else
       contents = CSV.open filename, headers: true, header_converters: :symbol
+      return filename
     end
     # contents.each do |row|
     #   id = row[0]

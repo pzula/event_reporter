@@ -11,11 +11,12 @@ class HappyPathTest < Minitest::Test
 
   def test_will_load_file_if_nil
     filename = nil
-    assert_equal './event_attendees.csv', reporter.load_csv(filename)
+    assert_equal "event_attendees.csv", reporter.load_csv(filename)
   end
 
   def test_will_load_file_with_name
-    skip
+    filename = "event_attendees_copy.csv"
+    assert_equal filename, reporter.load_csv(filename)
   end
 
 
