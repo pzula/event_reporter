@@ -12,7 +12,7 @@ class CommandCenterTest < Minitest::Test
   def test_it_takes_quit_command_and_quits
     input = "quit"
     robot = CommandCenter.new
-    assert_equal input, robot.command
+    assert_equal "Thank you for using the Event Reporter! Goodbye.", robot.parse_instruction(input)
   end
 
 end

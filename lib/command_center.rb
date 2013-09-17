@@ -1,17 +1,24 @@
 class CommandCenter
 
   def command
-    keystroke = ""
-    while keystroke != "quit"
+    instruction = ""
+    while instruction != "quit"
       printf "Enter Command: "
       input = gets.chomp
       parts = input.split(" ")
-      keystroke = parts[0]
-      case keystroke
-        when 'quit' then puts "Thank you for using the Event Reporter! Goodbye."
+      instruction = parts[0]
+      parse_instruction(instruction)
+    end 
+  end
+
+  def parse_instruction(command)
+    quitmessage = "Thank you for using the Event Reporter! Goodbye."
+    case command
+        when 'quit' 
+          puts quitmessage
+          return quitmessage
         when 'help' then help(parts[1])
       end
-    end 
   end
 
   def help(command)
