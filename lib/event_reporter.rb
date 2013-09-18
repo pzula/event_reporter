@@ -19,21 +19,40 @@ class EventReporter
   end
 
   def attendees
-    result = []
-    contents.each do |row|
-      result << Attendee.new(row)
+    result = contents.map do |row|
+      Attendee.new(row)
     end
-    result
   end
-
-  private
 
   def contents
     @contents ||= load_data
   end
 
   def load_data
-    CSV.open filename, headers: true, header_converters: :symbol
+    CSV.read filename, headers: true, header_converters: :symbol
+  end
+
+end
+
+class Finder 
+
+  def initialize(data)
+    @data = data
+    @queue = []
+  end
+
+  def queue_count
+    @queue.count
+  end
+
+  def find_first_name(input)
+    @data.each do |row|
+      if row[:first_name] == input
+        @queue << row
+      end
+    end
+
+    @queue
   end
 
 end
