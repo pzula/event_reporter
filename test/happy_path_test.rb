@@ -55,14 +55,49 @@ class FinderTest < Minitest::Test
 
   def test_find_first_name
     expected_count = 63
-    actual = @finder.find("first_name", "John") # => [ row1, row2, row12, row14 ]
+    actual = @finder.find("first_name", "John") 
     actual_count = actual.count
     assert_equal expected_count, actual_count
   end
 
   def test_find_last_name
     expected_count = 35
-    actual = @finder.find("last_name", "Smith") # => [ row1, row2, row12, row14 ]
+    actual = @finder.find("last_name", "Smith") 
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_homephone
+    expected_count = 1
+    actual = @finder.find("homephone", "718-866-5000")
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_email_address
+    expected_count = 1
+    actual = @finder.find("email_address", "fpmorgan07@jumpstartlab.com")
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_city
+    expected_count = 3
+    actual = @finder.find("city", "Denver")
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_state
+    expected_count = 29
+    actual = @finder.find("state", "CO")
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_zipcode
+    expected_count = 1
+    actual = @finder.find("zipcode", "37216")
     actual_count = actual.count
     assert_equal expected_count, actual_count
   end

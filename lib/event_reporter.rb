@@ -2,12 +2,17 @@ require 'csv'
 
 
 class Attendee
-  attr_reader :first_name, :last_name
+  attr_reader :first_name, :last_name, :email_address, :homephone, :city, :state, :zipcode
+
 
   def initialize(data)
     @first_name = clean_name(data[:first_name])
     @last_name = clean_name(data[:last_name])
-    # make everything else
+    @email_address = data[:email_address]
+    @homephone = data[:homephone]
+    @city = data[:city]
+    @state = data[:state]
+    @zipcode = data[:zipcode]
   end
 
   def clean_name(name)
@@ -50,16 +55,6 @@ class Finder
   def queue_count
     @queue.count
   end
-
-  # def find_first_name(input)
-  #   @data.each do |attendee|
-  #     if attendee.first_name == input
-  #       @queue << attendee
-  #     end
-  #   end
-  #   @queue
-  # end
-
 
   def find(attribute, value)
     @data.each do |attendee|
