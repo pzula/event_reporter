@@ -99,19 +99,18 @@ class CommanderTest < Minitest::Test
     assert_equal expected_output, command.fetch_message
   end
      
-  def test_help_with_options
+  def test_help_with_queue_count_option
     command = Commander.new("help queue count")
     file = File.open("help.txt", "r")
     expected_output = file.readlines[10]
     assert_equal expected_output, command.process_commands
   end
      
-  def test_queue_count
-    skip
-    command = Commander.new("queue count")
-     
-    assert_equal :queue, command.message
-    assert_equal "count", command.fetch_options
+  def test_help_with_queue_print_option
+    command = Commander.new("help queue print")
+    file = File.open("help.txt", "r")
+    expected_output = file.readlines[15, 17]
+    assert_equal expected_output, command.process_commands
   end
 
 end

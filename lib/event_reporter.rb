@@ -78,9 +78,14 @@ class Commander
     File.open("help.txt", "r").read
   end
 
-  def print_queue_help
+  def print_queue_count_help
     file = File.open("help.txt", "r")
     file.readlines[10]
+  end
+
+  def print_queue_print_help
+    file = File.open("help.txt", "r")
+    file.readlines[15, 17]
   end
 
   def process_commands
@@ -99,7 +104,8 @@ class Commander
 
   def fetch_options
     case @options
-      when "queue count" then print_queue_help 
+      when "queue count" then print_queue_count_help 
+      when "queue print" then print_queue_print_help
     end
   end
 
