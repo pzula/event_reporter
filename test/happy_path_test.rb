@@ -87,7 +87,7 @@ class CommanderTest < Minitest::Test
   def test_help_method
     file = File.open("help.txt", "r")
     expected_output = file.read
-    actual_output = @robot.help 
+    actual_output = @robot.print_help 
     assert_equal expected_output, actual_output
   end
 
@@ -95,24 +95,23 @@ class CommanderTest < Minitest::Test
     file = File.open("help.txt", "r")
     expected_output = file.read
     command = Commander.new("help")
-     
-    assert_equal expected_output, command.message
+      
+    assert_equal expected_output, command.fetch_message
   end
      
   def test_help_with_options
-    skip
-    command = Command.new("help queue count")
-     
-    assert_equal :help, command.message
-    assert_equal "queue count", command.options
+    command = Commander.new("help queue count")
+    file = File.open("help.txt", "r")
+    expected_output = file.readlines[10]
+    assert_equal expected_output, command.process_commands
   end
      
   def test_queue_count
     skip
-    command = Command.new("queue count")
+    command = Commander.new("queue count")
      
     assert_equal :queue, command.message
-    assert_equal "count", command.options
+    assert_equal "count", command.fetch_options
   end
 
 end

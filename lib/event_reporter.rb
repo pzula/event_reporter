@@ -67,16 +67,39 @@ class Commander
   attr_accessor :command
 
   def initialize(command = nil)
-    @command = command
+    if command != nil
+      command_parts = command.split(" ")
+      @command = command_parts[0]
+      @options = command_parts[1..2].join(" ")
+    end
   end
 
-  def help(options = nil)
+  def print_help
     File.open("help.txt", "r").read
   end
 
-  def message
+  def print_queue_help
+    file = File.open("help.txt", "r")
+    file.readlines[10]
+  end
+
+  def process_commands
+    if @options.nil?
+      fetch_message
+    else
+      fetch_options 
+    end
+  end
+
+  def fetch_message
     case @command
-    when "help" then help
+      when "help" then print_help
+    end
+  end
+
+  def fetch_options
+    case @options
+      when "queue count" then print_queue_help 
     end
   end
 
