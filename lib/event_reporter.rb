@@ -64,6 +64,8 @@ end
 
 class Commander
 
+  attr_accessor :command
+
   def initialize(command = nil)
     @command = command
   end
@@ -72,6 +74,11 @@ class Commander
     File.open("help.txt", "r").read
   end
 
+  def message
+    case @command
+    when "help" then help
+    end
+  end
 
 
 end

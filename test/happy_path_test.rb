@@ -84,11 +84,35 @@ class CommanderTest < Minitest::Test
     @robot = Commander.new
   end
 
-  def test_help_with_no_parameter
+  def test_help_method
     file = File.open("help.txt", "r")
     expected_output = file.read
     actual_output = @robot.help 
     assert_equal expected_output, actual_output
+  end
+
+  def test_help_command
+    file = File.open("help.txt", "r")
+    expected_output = file.read
+    command = Commander.new("help")
+     
+    assert_equal expected_output, command.message
+  end
+     
+  def test_help_with_options
+    skip
+    command = Command.new("help queue count")
+     
+    assert_equal :help, command.message
+    assert_equal "queue count", command.options
+  end
+     
+  def test_queue_count
+    skip
+    command = Command.new("queue count")
+     
+    assert_equal :queue, command.message
+    assert_equal "count", command.options
   end
 
 end
