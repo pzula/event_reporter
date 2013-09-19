@@ -9,7 +9,7 @@ class Attendee
     @first_name = clean_name(data[:first_name])
     @last_name = clean_name(data[:last_name])
     @email_address = data[:email_address]
-    @homephone = data[:homephone]
+    @homephone = clean_phone_number(data[:homephone])
     @city = data[:city]
     @state = data[:state]
     @zipcode = data[:zipcode]
@@ -17,6 +17,20 @@ class Attendee
 
   def clean_name(name)
     name.capitalize
+  end
+
+  def clean_phone_number(number)
+    if number
+      number = number.scan(/[0-9]/).join
+      if number.length == 11 && number.start_with?("1")
+        number= number[1..-1]
+      end
+      if number.length != 10
+        number = "0000000000"
+      end
+
+      return number
+    end
   end
 end
 

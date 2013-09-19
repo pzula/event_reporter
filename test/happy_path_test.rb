@@ -7,11 +7,35 @@ class AttendeeTest < Minitest::Test
 
   def test_attendee_attributes
     data = {:first_name => "Joe", 
-            :last_name => "Smith", 
-            :phone_number => "3306669955" }
+            :last_name => "Smith"}
     attendee = Attendee.new(data)
     assert_equal "Joe", attendee.first_name
     assert_equal "Smith", attendee.last_name
+  end
+
+  def test_it_cleans_up_phone_numbers_with_periods_and_hyphens
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => "202.444-9382")
+    assert_equal "2024449382", attendee.homephone
+  end
+
+  def test_it_cleans_up_phone_numbers_with_spaces_and_parentheses
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => "(202) 444 9382")
+    assert_equal "2024449382", attendee.homephone
+  end
+
+  def test_it_removes_leading_one_from_an_eleven_digit_phone_number
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => '12024449382')
+    assert_equal "2024449382", attendee.homephone
+  end
+
+  def test_it_throws_away_phone_numbers_that_are_too_long
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => "23334445555")
+    assert_equal "0000000000", attendee.homephone
+  end
+
+  def test_it_throws_away_phone_numbers_that_are_too_short
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => '222333444')
+    assert_equal "0000000000", attendee.homephone
   end
 
 end
@@ -69,7 +93,7 @@ class FinderTest < Minitest::Test
 
   def test_find_homephone
     expected_count = 1
-    actual = @finder.find("homephone", "718-866-5000")
+    actual = @finder.find("homephone", "7188665000")
     actual_count = actual.count
     assert_equal expected_count, actual_count
   end
