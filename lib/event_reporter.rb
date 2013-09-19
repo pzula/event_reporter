@@ -35,6 +35,7 @@ class EventReporter
 end
 
 class Finder 
+  attr_accessor :queue
 
   def initialize(data)
     @data = data
@@ -53,6 +54,24 @@ class Finder
     end
 
     @queue
+  end
+
+  def queue_clear
+    @queue.each do |row|
+      @queue << row.delete(row)
+    end
+
+    @queue
+  end
+
+end
+
+class Commander
+
+  def help
+    file = File.open("help.txt", "r") 
+    help = file.read
+    return help
   end
 
 end

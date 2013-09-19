@@ -60,10 +60,6 @@ class FinderTest < Minitest::Test
     actual = @finder.find_first_name("John") # => [ row1, row2, row12, row14 ]
     actual_count = actual.count
     assert_equal expected_count, actual_count
-  
-    # 1 : data
-    # 2 : field
-    # 3 : criteria
   end
 
   def test_queue_count_after_find_first_name
@@ -71,6 +67,28 @@ class FinderTest < Minitest::Test
     @finder.find_first_name("John")
     actual_count = @finder.queue_count
     assert_equal expected_count, actual_count
+  end
+
+  def test_queue_clear_returns_zero
+    expected_count = 0
+    @finder.queue_clear
+    actual_count = @finder.queue_count
+    assert_equal expected_count, actual_count
+  end
+
+end
+
+class CommanderTest < Minitest::Test
+
+  def setup 
+    @robot = Commander.new
+  end
+
+  def test_help_with_no_parameter
+      file = File.open("help.txt", "r")
+      expected_output = file.read
+      actual_output = @robot.help 
+      assert_equal expected_output, actual_output
   end
 
 end
