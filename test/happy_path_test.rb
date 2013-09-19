@@ -36,7 +36,7 @@ class EventReporterTest < Minitest::Test
 
   def test_file_loaded
     reporter = EventReporter.new("./test/fixtures/fake.csv")
-    attendee = reporter.attendees.first
+    attendee = reporter.create_attendees.first
     assert_equal "Allison", attendee.first_name
     assert_equal "Nguyen", attendee.last_name
   end
@@ -46,9 +46,7 @@ end
 class FinderTest < Minitest::Test
 
   def setup
-    reporter = EventReporter.new("event_attendees.csv")
-    contents = reporter.contents
-    @finder = Finder.new(contents)
+    @finder = Finder.new
   end
 
   def test_queue_count_equals_zero
@@ -56,15 +54,22 @@ class FinderTest < Minitest::Test
   end
 
   def test_find_first_name
-    expected_count = 62
-    actual = @finder.find_first_name("John") # => [ row1, row2, row12, row14 ]
+    expected_count = 63
+    actual = @finder.find("first_name", "John") # => [ row1, row2, row12, row14 ]
+    actual_count = actual.count
+    assert_equal expected_count, actual_count
+  end
+
+  def test_find_last_name
+    expected_count = 35
+    actual = @finder.find("last_name", "Smith") # => [ row1, row2, row12, row14 ]
     actual_count = actual.count
     assert_equal expected_count, actual_count
   end
 
   def test_queue_count_after_find_first_name
-    expected_count = 62
-    @finder.find_first_name("John")
+    expected_count = 63
+    @finder.find("first_name", "John")
     actual_count = @finder.queue_count
     assert_equal expected_count, actual_count
   end

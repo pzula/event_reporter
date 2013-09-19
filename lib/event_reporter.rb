@@ -5,21 +5,26 @@ class Attendee
   attr_reader :first_name, :last_name
 
   def initialize(data)
-    @first_name = data[:first_name]
-    @last_name = data[:last_name]
+    @first_name = clean_name(data[:first_name])
+    @last_name = clean_name(data[:last_name])
+    # make everything else
+  end
+
+  def clean_name(name)
+    name.capitalize
   end
 end
 
 class EventReporter
-  attr_reader :filename
+  attr_reader :filename, :attendees
   # attr_accessor :first_name, :last_name, :phone_number
 
-  def initialize(filename=nil)
+  def initialize(filename = nil)
     @filename = filename || "event_attendees.csv"
   end
 
-  def attendees
-    result = contents.map do |row|
+  def create_attendees
+    @attendees = contents.map do |row|
       Attendee.new(row)
     end
   end
@@ -37,8 +42,8 @@ end
 class Finder 
   attr_accessor :queue
 
-  def initialize(data)
-    @data = data
+  def initialize
+    @data = EventReporter.new.create_attendees
     @queue = []
   end
 
@@ -46,13 +51,22 @@ class Finder
     @queue.count
   end
 
-  def find_first_name(input)
-    @data.each do |row|
-      if row[:first_name] == input
-        @queue << row
+  # def find_first_name(input)
+  #   @data.each do |attendee|
+  #     if attendee.first_name == input
+  #       @queue << attendee
+  #     end
+  #   end
+  #   @queue
+  # end
+
+
+  def find(attribute, value)
+    @data.each do |attendee|
+      if attendee.send(attribute.to_sym) == value
+        @queue << attendee
       end
     end
-
     @queue
   end
 
