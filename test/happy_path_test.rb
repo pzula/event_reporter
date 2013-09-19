@@ -85,10 +85,10 @@ class CommanderTest < Minitest::Test
   end
 
   def test_help_with_no_parameter
-      file = File.open("help.txt", "r")
-      expected_output = file.read
-      actual_output = @robot.help 
-      assert_equal expected_output, actual_output
+    file = File.open("help.txt", "r")
+    expected_output = file.read
+    actual_output = @robot.help 
+    assert_equal expected_output, actual_output
   end
 
 end

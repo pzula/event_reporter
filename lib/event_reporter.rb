@@ -57,22 +57,22 @@ class Finder
   end
 
   def queue_clear
-    @queue.each do |row|
-      @queue << row.delete(row)
-    end
-
-    @queue
+    @queue.clear
   end
 
 end
 
 class Commander
 
-  def help
-    file = File.open("help.txt", "r") 
-    help = file.read
-    return help
+  def initialize(command = nil)
+    @command = command
   end
+
+  def help(options = nil)
+    File.open("help.txt", "r").read
+  end
+
+
 
 end
 
