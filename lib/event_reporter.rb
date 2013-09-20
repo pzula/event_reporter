@@ -72,6 +72,7 @@ class Finder
   end
 
   def find(attribute, value)
+    @queue.clear
     @data.each do |attendee|
       if attendee.send(attribute.to_sym) == value
         @queue << attendee

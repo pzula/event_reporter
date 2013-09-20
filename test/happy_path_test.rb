@@ -137,6 +137,15 @@ class FinderTest < Minitest::Test
     assert_equal expected_count, actual_count
   end
 
+  def test_queue_count_after_find_first_name_twice
+    expected_count = 63
+    @finder.find("first_name", "John")
+    actual_count = @finder.queue_count
+    assert_equal expected_count, actual_count
+    @finder.find("first_name", "Allyson")
+    assert_equal 1, @finder.queue_count
+  end
+
   def test_queue_clear_returns_zero
     expected_count = 0
     @finder.queue_clear
