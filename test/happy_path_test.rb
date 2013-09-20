@@ -38,6 +38,10 @@ class AttendeeTest < Minitest::Test
     assert_equal "0000000000", attendee.homephone
   end
 
+  def test_it_edits_zip_codes_that_are_too_short
+    attendee = Attendee.new(:first_name => "Joe", :last_name => "Smith", :email_address => "fake@gmail.com", :homephone => '222333444', :city => 'Brunswick', :state => 'OH', :zipcode => '342')
+    assert_equal "00342", attendee.zipcode
+  end
 end
 
 

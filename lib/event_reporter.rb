@@ -12,7 +12,7 @@ class Attendee
     @homephone = clean_phone_number(data[:homephone])
     @city = data[:city]
     @state = data[:state]
-    @zipcode = data[:zipcode]
+    @zipcode = clean_zip_code(data[:zipcode])
   end
 
   def clean_name(name)
@@ -32,6 +32,11 @@ class Attendee
       return number
     end
   end
+
+  def clean_zip_code(zip)
+    zip.to_s.rjust(5, '0')[0..4]
+  end
+
 end
 
 class EventReporter
@@ -66,10 +71,6 @@ class Finder
     @queue = []
   end
 
-  def queue_count
-    @queue.count
-  end
-
   def find(attribute, value)
     @data.each do |attendee|
       if attendee.send(attribute.to_sym) == value
@@ -77,6 +78,10 @@ class Finder
       end
     end
     @queue
+  end
+
+  def queue_count
+    @queue.count
   end
 
   def queue_clear
@@ -95,20 +100,6 @@ class Commander
       @command = command_parts[0]
       @options = command_parts[1..2].join(" ")
     end
-  end
-
-  def print_help
-    File.open("help.txt", "r").read
-  end
-
-  def print_queue_count_help
-    file = File.open("help.txt", "r")
-    file.readlines[10]
-  end
-
-  def print_queue_print_help
-    file = File.open("help.txt", "r")
-    file.readlines[15, 17]
   end
 
   def process_commands
@@ -131,6 +122,21 @@ class Commander
       when "queue print" then print_queue_print_help
     end
   end
+
+  def print_help
+    File.open("help.txt", "r").read
+  end
+
+  def print_queue_count_help
+    file = File.open("help.txt", "r")
+    file.readlines[10]
+  end
+
+  def print_queue_print_help
+    file = File.open("help.txt", "r")
+    file.readlines[15, 17]
+  end
+
 
 
 end
