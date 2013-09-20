@@ -120,11 +120,19 @@ class Commander
     case @options
       when "queue count" then print_queue_count_help 
       when "queue print" then print_queue_print_help
+      when "queue save" then print_queue_save_help
+      when "load" then print_load_help
+      when "find" then print_find_help
     end
   end
 
   def print_help
     File.open("help.txt", "r").read
+  end
+
+  def print_find_help
+    file = File.open("help.txt", "r")
+    file.readlines[9]
   end
 
   def print_queue_count_help
@@ -136,6 +144,17 @@ class Commander
     file = File.open("help.txt", "r")
     file.readlines[15, 17]
   end
+
+  def print_queue_save_help
+    file = File.open("help.txt", "r")
+    file.readlines[19]
+  end
+
+  def print_load_help
+    file = File.open("help.txt", "r")
+    file.readlines[6]
+  end
+
 
 
 

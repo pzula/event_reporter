@@ -181,4 +181,25 @@ class CommanderTest < Minitest::Test
     assert_equal expected_output, command.process_commands
   end
 
+  def test_help_with_queue_save_option
+    command = Commander.new("help queue save")
+    file = File.open("help.txt", "r")
+    expected_output = file.readlines[19]
+    assert_equal expected_output, command.process_commands
+  end
+
+  def test_help_with_load_option
+    command = Commander.new("help load")
+    file = File.open("help.txt", "r")
+    expected_output = file.readlines[6]
+    assert_equal expected_output, command.process_commands
+  end
+
+  def test_help_with_find_option
+    command = Commander.new("help find")
+    file = File.open("help.txt", "r")
+    expected_output = file.readlines[9]
+    assert_equal expected_output, command.process_commands
+  end
+
 end
